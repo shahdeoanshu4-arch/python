@@ -1,0 +1,26 @@
+from collections import deque
+
+def knight_shortest_path(start, target):
+    moves = [(2,1),(1,2),(-1,2),(-2,1),
+             (-2,-1),(-1,-2),(1,-2),(2,-1)]
+
+    queue = deque([(start, 0)])
+    visited = set([start])
+
+    while queue:
+        (x, y), steps = queue.popleft()
+
+        if (x, y) == target:
+            return steps
+
+        for dx, dy in moves:
+            nx, ny = x + dx, y + dy
+
+            if 0 <= nx < 8 and 0 <= ny < 8 and (nx, ny) not in visited:
+                visited.add((nx, ny))
+                queue.append(((nx, ny), steps + 1))
+
+    return -1
+
+
+print(knight_shortest_path((0,0), (7,7)))
